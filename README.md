@@ -66,7 +66,6 @@
 
 # 文件说明
 
-
 │  说明.pptx                                                   #展示的ppt
 │  index.py                                               #爬取百度指数
 │  info.py  #存储必要信息，如cookies，可搜索的城市
@@ -114,3 +113,7 @@
         info.cpython-39.pyc
         pydraw.cpython-38.pyc
         pydraw.cpython-39.pyc
+
+# 作者
+
+如果有任何使用问题，可以邮件联系suizhijie@tju.edu.cn
