@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
-cookie = 'BDUSS=复制您的cookie到此处'
+cookie = 'BDUSS=pHMjRtUnI5UGYtdm1jSFM5RzVpUzh5V2RkbUdGb1N4d3dONS0xYk9nWmJIT3hoRVFBQUFBJCQAAAAAAAAAAAEAAABCmX8207S69M7SysfIywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFuPxGFbj8RhR1'
+
+
 headers = {
     "Connection": "keep-alive",
     "Accept": "application/json, text/plain, */*",
@@ -72,8 +74,6 @@ def is_cookies_valid(cookies):  # 检查cookies是否可用: 通过访问百度�
     URL_BAIDU = "https://www.baidu.com/"
     response = request_with_cookies(URL_BAIDU, cookies)  # 使用cookie请求百度首页, 获取响应内容
     html = response.text  # 获取响应的页面源代码
-    with open("1.html", "w") as f:
-        f.write(html)
     soup = BeautifulSoup(html, "lxml")  # 解析页面源代码
     flag1 = soup.find("a", class_="quit") is not None  # "退出登录"按钮(a标签)是否存在
     flag2 = soup.find("span", class_="user-name") is not None  # 用户名(span标签)是否存在

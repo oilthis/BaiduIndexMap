@@ -19,8 +19,10 @@ def draw_timeline_with_map(message, keyword):
     maxIndex = list(map(int, maxIndex))
     maxIndex.sort()
     maxIndex = maxIndex[3]
-    maxIndex = maxIndex - maxIndex % 1000
-    maxIndex = maxIndex - maxIndex % 100
+    if maxIndex > 1000:
+        maxIndex = maxIndex - maxIndex % 1000
+    elif maxIndex > 100:
+        maxIndex = maxIndex - maxIndex % 100
     for i in range(1, 8):
         city_count_dic = message.copy()
         for key in city_count_dic.keys():

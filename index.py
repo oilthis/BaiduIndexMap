@@ -32,6 +32,9 @@ def get_index_data(keys, start=None, location=None):
     url = f'http://index.baidu.com/api/SearchApi/index?area={area}&word={words}&startDate={start}&endDate={end}'
     res = requests.get(url, headers=info.headers).json()
     data = res['data']
+    if data == '':
+        print('Invalid cookies.Try to change your Baidu account.')
+        exit(1)
     uniqid = data['uniqid']
     url = f'http://index.baidu.com/Interface/ptbk?uniqid={uniqid}'
     res = requests.get(url, headers=info.headers)
