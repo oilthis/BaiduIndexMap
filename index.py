@@ -20,10 +20,10 @@ def get_index_data(keys, start=None, location=None):
     words = str(words).replace(" ", "").replace("'", "\"")
     today = date.today()
     if start is None:
-        start = today - timedelta(days=6)
+        start = today - timedelta(days=8)
     else:
         start = datetime.strptime(start, "%Y-%m-%d").date()
-    end = str(start + timedelta(days=4))
+    end = str(start + timedelta(days=6))
     start = str(start)
     if location is None:
         area = 0

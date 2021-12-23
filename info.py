@@ -1,7 +1,7 @@
+import requests
+from bs4 import BeautifulSoup
 
-cookie = 'BDUSS=复制你的cookies'
-
-
+cookie = 'BDUSS=复制您的cookie到此处'
 headers = {
     "Connection": "keep-alive",
     "Accept": "application/json, text/plain, */*",
@@ -11,9 +11,8 @@ headers = {
     "Sec-Fetch-Dest": "empty",
     "Referer": "https://index.baidu.com/v2/main/index.html",
     "Accept-Language": "zh-CN,zh;q=0.9",
-    'Cookie': cookie,
+    "Cookie": cookie,
 }
-
 
 location_code = {
     '济南': 1, '贵阳': 2, '六盘水': 4, '南昌': 5, '九江': 6, '鹰潭': 7,
@@ -54,7 +53,29 @@ location_code = {
     '驻马店': 371, '信阳': 373, '鹤壁': 374, '周口': 375, '商丘': 376, '洛阳': 378, '漯河': 379, '濮阳': 380, '三门峡': 381,
     '阿勒泰': 383, '喀什': 384, '和田': 386, '亳州': 391, '吴忠': 395, '固原': 396, '延安': 401, '邵阳': 405, '通化': 407,
     '白山': 408, '白城': 410, '甘孜': 417, '铜仁': 422, '安顺': 424, '毕节': 426, '文山': 437, '保山': 438,
-    '阿坝': 457, '拉萨': 466, '乌鲁木齐': 467, '石嘴山': 472, '中卫': 480, '来宾': 506,'北京': 514, '日喀则': 516,
+    '阿坝': 457, '拉萨': 466, '乌鲁木齐': 467, '石嘴山': 472, '中卫': 480, '来宾': 506, '北京': 514, '日喀则': 516,
     '那曲': 655, '林芝': 656, '玉树': 659, '伊犁哈萨克': 660, '思茅': 662, '香港': 663, '澳门': 664, '崇左': 665,
     '济源': 667, '文昌': 670, '甘南': 673, '昌都': 678, '临高县': 680, '神农架': 687, '阿拉尔': 692, '图木舒克': 693
 }
+
+
+def request_with_cookies(url, cookies, timeout=30):
+    header = headers.copy()
+    header["Cookie"] = cookies
+    response = requests.get(url, headers=headers, timeout=timeout)  # 发起请求
+    if response.status_code != 200:
+        raise requests.Timeout  # 请求异常: 一般为超时异常
+    return response  # 返回响应内容
+
+
+def is_cookies_valid(cookies):  # 检查cookies是否可用: 通过访问百度首页并检查相关元素是否存在
+    URL_BAIDU = "https://www.baidu.com/"
+    response = request_with_cookies(URL_BAIDU, cookies)  # 使用cookie请求百度首页, 获取响应内容
+    html = response.text  # 获取响应的页面源代码
+    with open("1.html", "w") as f:
+        f.write(html)
+    soup = BeautifulSoup(html, "lxml")  # 解析页面源代码
+    flag1 = soup.find("a", class_="quit") is not None  # "退出登录"按钮(a标签)是否存在
+    flag2 = soup.find("span", class_="user-name") is not None  # 用户名(span标签)是否存在
+    flag3 = soup.find("a", attrs={"name": "tj_login"}) is None  # "登录"按钮(a标签)是否存在
+    return flag3 and (flag1 or flag2)  # cookies可用判定条件: 登录按钮不存在且用户名与退出登录按钮至少存在一个

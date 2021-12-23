@@ -15,7 +15,13 @@ def draw_timeline_with_map(message, keyword):
     tl.add_schema(is_auto_play=False, is_loop_play=True, control_position='left', play_interval=1000)
     start = message['济南']['startDate']
     start = datetime.strptime(start, "%Y-%m-%d").date()
-    for i in range(1, 6):
+    maxIndex = message['济南'][keyword].copy()
+    maxIndex = list(map(int, maxIndex))
+    maxIndex.sort()
+    maxIndex = maxIndex[3]
+    maxIndex = maxIndex - maxIndex % 1000
+    maxIndex = maxIndex - maxIndex % 100
+    for i in range(1, 8):
         city_count_dic = message.copy()
         for key in city_count_dic.keys():
             try:
@@ -37,8 +43,8 @@ def draw_timeline_with_map(message, keyword):
                 .set_global_opts(
                 title_opts=opts.TitleOpts(title=f"关于{keyword}的搜索指数", pos_left="center", pos_bottom="90%"),
                 legend_opts=opts.LegendOpts(pos_left="5%", pos_bottom="10%"),
-                visualmap_opts=opts.VisualMapOpts(max_=getMax(city_count_dic.values(), 15), min_=1, range_text=['搜索指数颜色:', ''], pos_bottom="10%")
-                # getMax(city_count_dic.values())
+                visualmap_opts=opts.VisualMapOpts(max_=maxIndex, min_=1, range_text=['搜索指数颜色:', ''], pos_bottom="10%")
+                # getMax(city_count_dic.values(), 15)
             )
                 .set_series_opts(label_opts=opts.LabelOpts(is_show=False))
         )
