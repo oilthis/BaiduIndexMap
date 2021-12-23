@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-cookie = 'BDUSS=pHMjRtUnI5UGYtdm1jSFM5RzVpUzh5V2RkbUdGb1N4d3dONS0xYk9nWmJIT3hoRVFBQUFBJCQAAAAAAAAAAAEAAABCmX8207S69M7SysfIywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFuPxGFbj8RhR1'
-
+cookie = 'BDUSS=复制cookies到此处'
 
 headers = {
     "Connection": "keep-alive",
